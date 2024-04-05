@@ -1,0 +1,46 @@
+---
+all:
+    children:
+        standalone_machine:
+            children:
+                hypervisors:
+                    hosts:
+                        rsapc-mk2:
+                            # Ansible variables
+                            ansible_host: "{{ host_ip }}"
+                            ansible_user: ansible
+                            ansible_python_interpreter: /usr/bin/python3
+                            ansible_connection: ssh
+                            ansible_ssh_common_args: '-o StrictHostKeyChecking=no'
+                            ansible_remote_tmp: /home/ansible/.ansible/tmp
+
+                            # snmp network settings
+                            snmp_admin_ip_addr: "{{ ansible_host }}" #used to listen to snmp requests
+
+                            # Main network configuration
+                            network_interface: enp1s0
+                            ip_addr: "{{ ansible_host }}"
+                            subnet: 24
+                            dns_servers:
+                            gateway_addr:
+                            ntp_servers:
+                              - "185.254.101.25"
+                              - "51.145.123.29"
+
+                            # Other Network configuration
+                            apply_network_config: true # true to apply the network configuration without rebooting
+                            ptp_interface: "enp7s0" #OPTIONAL PTP Interface
+                              #ptp_vlanid: 100 #OPTIONAL VlanID for PTP
+                            ptp_delay_mechanism: P2P # OPTIONAL E2E or P2P defaut is P2P
+                            ptp_network_transport: L2 # OPTIONAL L2 or UDPv4 default is L2
+                            # The password hash generated with "grub-mkpasswd-pbkdf2 -c 65536 -s 256 -l 64", in this example the pass is "toto"
+                            grub_password: grub.pbkdf2.sha512.65536.E291D66AEEB3C22BD6B019C5C3587A3094AE93D61E20D134EC6324925AE5045DCA61EF30B3BD04B4D6F7360B9C9B242AA68B1643CCB269C53658EC959B5964ADB9C9D5FAA280A291D8F95E3F255254A4119A2431AFE797F1949EE4FBBC4C74281C550C83DAED26C254224061BEFCEEBF8091A8D1BE406EBB3A3E8A519E36B4FE161BE191D407193E5DFEBCC09F8822B4060EA9CD1E6B8677D40D32826EF025CA494BCD209032F7CF2A4A2E74717E6D17E87A62AAA93E458C96F983E69FBFC4FD602403988EAF5AADCA4B5B145B0F6C6FFB53F55CD6C56C15C17B2F8A5B3A214F3140470566597760D9388084AE978DB5C0EBF7C868A855DB38DACA47A010417A.FDA0C3188FAC87FFA04D862AC9B1020F29FEEA3B9590BE534330D8C7CAB71444CBF527E39D7DAE640545139202B9CA77822CCE21AB1134110F6AF3EFD793E848
+
+                            # Extra kernel modules to be loaded at boot (you may need this depending on your hardware)
+                            #extra_kernel_modules: [msr]
+
+                            # Default user with admin privileges, and password hash
+                            admin_user: virtu
+                            admin_passwd: "$6$7rJ8JYS2T1RvMktD$ubVm/aQNocv3AWm.RWFcWAzoGSu2fs4PwnsJuezOUwq.Ya5Bx5J5zVG0HTqYpQy7dYPtndc9TK3usfdZwsNWt/"
+
+                            chrony_wait_timeout_sec: 180 #time in seconds the boot sequence will wait for chrony to sync. Optional : default is 180

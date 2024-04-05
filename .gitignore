@@ -1,3 +1,6 @@
+*gz
+*img
+*qcow
 # Ignore roles directory
 roles/systemd_networkd/
 roles/corosync/
@@ -17,6 +20,7 @@ playbooks/*
 inventories/*
 !inventories/README.adoc
 !inventories/*example*
+!inventories/welotec*
 
 # Ide
 .idea/

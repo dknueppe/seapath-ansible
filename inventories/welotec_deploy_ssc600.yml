@@ -1,0 +1,16 @@
+all:
+  children:
+    VMs:
+      hosts:
+        SSC600:
+          ansible_host: 192.168.130.22
+          vm_template: "../templates/vm/ssc600-kvm.xml"
+          vm_disk: "../vm_images/ssc600_disk.img.gz"
+          disk_extract: true
+          bridges:
+            - name: "br0" # Change the bridge name
+              mac_address: "52:54:00:c4:ff:05" # change the MAC address
+      vars:
+        ansible_user: virtu
+        apply_network_config: true
+        ip_addr: "{{ ansible_host }}"
