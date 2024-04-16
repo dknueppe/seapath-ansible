@@ -60,7 +60,7 @@
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
     <disk type="file" device="disk">
       <driver name="qemu" type="raw" cache="none" io="threads"/>
-      <source file="/var/lib/libvirt/images/ssc600.img"/>
+      <source file="/var/lib/libvirt/images/SSC600.img"/>
       <target dev="vda" bus="virtio"/>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x05" function="0x0"/>
     </disk>

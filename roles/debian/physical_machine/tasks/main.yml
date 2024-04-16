@@ -405,6 +405,8 @@
       dest: "/usr/local/sbin/snmp_getdata.py"
       mode: '0755'
   - name: cron job to generate snmp data
+    tags:
+      - ignorethis
     copy:
       src: ../src/debian/snmp/seapathsnmp.cron
       dest: "/etc/cron.d/seapathsnmp"
