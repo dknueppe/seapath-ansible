@@ -325,6 +325,8 @@
         enabled: false
 
 - name: Configure systemd-networkd-wait-online.service
+  tags:
+    - ignorethis
   hosts:
     - cluster_machines
     - standalone_machine
