@@ -406,7 +406,7 @@
       mode: '0755'
   - name: cron job to generate snmp data
     tags:
-      - ignorethis
+      - never
     copy:
       src: ../src/debian/snmp/seapathsnmp.cron
       dest: "/etc/cron.d/seapathsnmp"
