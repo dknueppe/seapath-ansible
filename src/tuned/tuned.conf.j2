@@ -3,17 +3,20 @@ include=realtime-virtual-host
 summary=Seapath profile for RT host (Seapath Rt Host = SRH)
 
 [variables]
-isolated_cores={{ isolcpus | default('') }}
+isolated_cores=5-7
+non_isolated_cores=0,1,8,9
 non_isolated_cores_expanded=${f:cpulist_unpack:${non_isolated_cores}}
 
 [sysctl]
 kernel.printk=3 1 1 7
+kernel.nmi_watchdog=0
+vm.nr_hugepages=10
 
 [sysfs]
 /sys/module/kvm/parameters/halt_poll_ns = 0
 
 [bootloader]
-cmdline_srh=+processor.max_cstate=1 intel_idle.max_cstate=1 cpufreq.default_governor=performance rcu_nocb_poll
+cmdline_srh=+processor.max_cstate=0 intel_idle.max_cstate=0 cpufreq.default_governor=performance rcu_nocb_poll idle=poll iomem=relaxed processor.max_cstate=0 intel_pstate=disable intel_iommu=on iommu=pt skew_tick=1 threadirqs preempt=full  default_hugepagesz=1G hugepagesz=1G maxcpus=13
 
 [scheduler]
 # for i in `pgrep rcuc` ; do grep Cpus_allowed_list /proc/$i/status ; done
