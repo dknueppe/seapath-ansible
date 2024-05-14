@@ -17,6 +17,7 @@ playbooks/*
 !playbooks/tasks/
 !playbooks/standalone*
 !playbooks/deploy_*.yaml
+!playbooks/welotec*
 inventories/*
 !inventories/README.adoc
 !inventories/*example*

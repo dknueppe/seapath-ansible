@@ -229,12 +229,13 @@
 
 - name: load seapath-rt-host tuned profile
   ansible.builtin.command: tuned-adm profile seapath-rt-host
-  when: isolcpus is defined
+  #when: isolcpus is defined
 
 - name: unload tuned profile
   ansible.builtin.command: tuned-adm off
   when: isolcpus is not defined
-
+  tags: 
+    - never
 
 - name: Create ovs-vswitchd.service.d directory
   file:
