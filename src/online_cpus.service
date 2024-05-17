@@ -1,0 +1,10 @@
+[Unit]
+Description=Online all CPU cores
+After=libvirt-guests.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/online_cpus.sh
+
+[Install]
+WantedBy=multi-user.target

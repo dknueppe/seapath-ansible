@@ -20,10 +20,10 @@
     <vcpupin vcpu="2" cpuset="6"/>
     <vcpupin vcpu="3" cpuset="7"/>
     <emulatorpin cpuset="12"/>
-    <vcpusched vcpus="0" scheduler="fifo" priority="14"/>
-    <vcpusched vcpus="1" scheduler="fifo" priority="12"/>
-    <vcpusched vcpus="2" scheduler="fifo" priority="10"/>
-    <vcpusched vcpus="3" scheduler="fifo" priority="11"/>
+    <vcpusched vcpus="0" scheduler="fifo" priority="20"/>
+    <vcpusched vcpus="1" scheduler="fifo" priority="99"/>
+    <vcpusched vcpus="2" scheduler="fifo" priority="99"/>
+    <vcpusched vcpus="3" scheduler="fifo" priority="99"/>
   </cputune>
   <os>
     <type arch="x86_64" machine="q35">hvm</type>

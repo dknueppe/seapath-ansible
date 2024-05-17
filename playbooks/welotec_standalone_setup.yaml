@@ -2,26 +2,17 @@
 # The machine must previously have been flashed
 # with an iso created by build_debian_iso
 #
-#- import_playbook: cluster_setup_prerequisdebian.yaml
-#- import_playbook: cluster_setup_network.yaml
-#
 ---
-- hosts: all
-  tasks:
-  - name: set groups for seapath setup
-    ansible.builtin.add_host:
-      name: '{{ item }}'
-      groups: hypervisor
-        #- standalone-machine
-    loop: "{{ ansible_play_hosts }}"
 - name: run debian prerequisites
   ansible.builtin.import_playbook: cluster_setup_prerequisdebian.yaml
 - name: run cluster network setup
   ansible.builtin.import_playbook: cluster_setup_network.yaml
 
-- hosts: all
+- name: copy and enable custom services
+  hosts: all
   become: true
   tasks:
+
   - name: copy cache_allocator.service unit file
     ansible.builtin.copy:
       src: ../src/cache_allocator.service
@@ -29,6 +20,7 @@
       owner: root
       group: root
       mode: '0644'
+
   - name: copy cache_allocator.sh
     ansible.builtin.copy:
       src: ../src/cache_allocator.sh
@@ -36,17 +28,43 @@
       owner: root
       group: root
       mode: '0754'
+
   - name: enable cache_allocator.service
     ansible.builtin.systemd_service:
       name: cache_allocator.service
-      state: started
-      daemon_reload: true
-  - name: Restart all hosts
-    hosts:
-      - standalone_machine
-    become: true
+      enabled: true
+
+  - name: copy online_cpus.service unit file
+    ansible.builtin.copy:
+      src: ../src/online_cpus.service
+      dest: /etc/systemd/system/online_cpus.service
+      owner: root
+      group: root
+      mode: '0644'
+
+  - name: copy online_cpus.sh
+    ansible.builtin.copy:
+      src: ../src/online_cpus.sh
+      dest: /usr/local/sbin/online_cpus.sh
+      owner: root
+      group: root
+      mode: '0754'
+
+  - name: enable online_cpus.service
+    ansible.builtin.systemd_service:
+      name: online_cpus.service
+      enabled: true
+
+- name: Restart all hosts
+  hosts:
+    - standalone_machine
+  become: true
   tasks:
-  - name: Restart to configure Debian
-    reboot:
-    when:
-      - skip_reboot_setup_debian is not defined or not skip_reboot_setup_debian
+
+    - name: Restart to configure Debian
+      reboot:
+      when:
+        - skip_reboot_setup_debian is not defined or not skip_reboot_setup_debian
+
+    - name: Wait for host to be online
+      wait_for_connection:

@@ -1,9 +1,10 @@
 [Unit]
 Description=allocate cache ways for RT application
+After=online_cpus.service
 
 [Service]
 Type=oneshot
 ExecStart=/usr/local/sbin/cache_allocator.sh
 
 [Install]
-WantedBy=basic.target
+WantedBy=multi-user.target

@@ -16,7 +16,7 @@ vm.nr_hugepages=10
 /sys/module/kvm/parameters/halt_poll_ns = 0
 
 [bootloader]
-cmdline_srh=+processor.max_cstate=0 intel_idle.max_cstate=0 cpufreq.default_governor=performance rcu_nocb_poll idle=poll iomem=relaxed processor.max_cstate=0 intel_pstate=disable intel_iommu=on iommu=pt skew_tick=1 threadirqs preempt=full  default_hugepagesz=1G hugepagesz=1G maxcpus=13
+cmdline_srh=+processor.max_cstate=0 intel_idle.max_cstate=0 cpufreq.default_governor=performance rcu_nocb_poll idle=poll iomem=relaxed processor.max_cstate=0 intel_pstate=disable intel_iommu=on iommu=pt skew_tick=1 threadirqs preempt=full  default_hugepagesz=1G hugepagesz=1G maxcpus=2 possible_cpus=13
 
 [scheduler]
 # for i in `pgrep rcuc` ; do grep Cpus_allowed_list /proc/$i/status ; done
